@@ -6,20 +6,18 @@ import Quantitiy from '/home/naveen/FoodCart/Screens/quantity'
 const width = Dimensions.get('window').width;
 
 export default function OneCard(props, { navigation }) {
+    
     return (
         <View style={styles.card} >
             <View style={{alignContent:'center',justifyContent:'center',alignItems:'center'}}>
             <TouchableOpacity style={{ margin: 10, elevation: 10, width: 2*width / 7, backgroundColor: 'white', height: 2*width / 7, borderRadius: 7, alignItems: 'center' }} activeOpacity={0.8} onPress={() => navigation.navigate('Discription', { price: props.price, rating: props.rating, grade: props.grade, image: props.image, type: props.type })}>
-                <Image
-                    style={styles.image}
-                    source={{
-                        uri: props.image,
-                    }}
-                />
                 
+                <Image style={styles.image}
+                    source={{uri:"http://10.150.42.223:8000/"+props.image}}
+                />
             </TouchableOpacity>
             <Text style={{color:'#00af91',marginTop:5}}>
-                    Brand Name
+                    {props.brand}
                 </Text>
 
             </View>
@@ -44,7 +42,7 @@ export default function OneCard(props, { navigation }) {
 
                 <View style={{ marginLeft: 15,marginTop:7 }}>
                     <Text style={{fontSize:width/30}}>
-                        Discription : adasf ,asdas ...
+                        Discription : {props.description}
                     </Text>
                 </View>
                 <Quantitiy maxq={10}/>
@@ -74,7 +72,8 @@ const styles = StyleSheet.create({
     image: {
         width: 2*width / 7,
         height: 2*width / 7,
-        resizeMode: "cover"
+        resizeMode: "cover",
+        borderRadius: 7
     },
     text: {
         fontSize: width/30,
