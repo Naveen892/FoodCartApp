@@ -7,6 +7,7 @@ const width = Dimensions.get('window').width;
 
 export default function OneCard(props, { navigation }) {
     
+    
     return (
         <View style={styles.card} >
             <View style={{alignContent:'center',justifyContent:'center',alignItems:'center'}}>
@@ -32,17 +33,17 @@ export default function OneCard(props, { navigation }) {
                     </View>
                     <View style={styles.btns, { margin: 0 }}>
                         <TouchableOpacity activeOpacity={0.8} style={styles.button}>
-                            <Text style={styles.text, { color: '#fff' }}>Add</Text>
+                            <Text style={styles.text}>Add</Text>
                         </TouchableOpacity>
                         <TouchableOpacity activeOpacity={0.8} style={styles.button}>
-                            <Text style={styles.text, { color: '#fff' }}>Buy Now</Text>
+                            <Text style={styles.text }>Buy Now</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
 
                 <View style={{ marginLeft: 15,marginTop:7 }}>
                     <Text style={{fontSize:width/30}}>
-                        Discription : {props.description}
+                        Discription : {(props.description).length<12 ? props.description:(""+props.description).substring(0,12)+"..."}
                     </Text>
                 </View>
                 <Quantitiy maxq={10}/>
@@ -77,7 +78,7 @@ const styles = StyleSheet.create({
     },
     text: {
         fontSize: width/30,
-        color: 'black',
+        color: '#fff',
 
     },
     button: {
