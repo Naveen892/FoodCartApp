@@ -4,7 +4,7 @@ import RatingBar from '/home/naveen/FoodCart/Screens/ratingBar'
 import Icon from 'react-native-vector-icons/FontAwesome';
 const width = Dimensions.get("window").width;
 export default function Discription({ route ,navigation}) {
-    const { price, rating, grade, image, type } = route.params;
+    const { price, rating, grade, image, name } = route.params;
     return (
         <View style={{flex:1}}>
             <View style={{ flex: 0.075, backgroundColor: '#00af91', flexDirection: 'row', alignItems: 'center',elevation:10 }}>
@@ -19,11 +19,11 @@ export default function Discription({ route ,navigation}) {
             <ScrollView style={{ flex: 0.855 }}>
                 <View style={styles.imgView}>
                     <View style={styles.imgBox}>
-                        <Image source={{ uri: "http://10.150.42.223:8000/"+image }} style={{ flex: 1 }} />
+                        <Image source={{ uri: "http://10.150.40.146:8000/"+image }} style={{ flex: 1 ,resizeMode:'contain'}} />
                     </View>
                     <View style={{ flex: 1, justifyContent: 'center' }}>
                         <Text style={{ fontSize: 30 }}>
-                            {type}
+                            {name}
                         </Text>
                     </View>
 
@@ -88,13 +88,14 @@ const styles = StyleSheet.create({
         elevation: 1,
     },
     imgBox: {
-        elevation: 4,
+        elevation: 1,
         padding: 10,
         borderBottomLeftRadius: 8,
         borderBottomRightRadius: 8,
         backgroundColor: 'white',
         height: 4 * width / 5,
-        width: 4 * width / 5
+        width: 4 * width / 5,
+        resizeMode:'contain'
     },
     btns: {
         flex: 0.07,

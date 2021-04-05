@@ -1,22 +1,39 @@
 import React, { useState } from 'react'
-import { View, Text, ScrollView, Image, StyleSheet, Dimensions, TouchableOpacity, Modal, TextInput } from 'react-native'
+import { View, Text, ScrollView, Image, StyleSheet, Dimensions, TouchableOpacity, Modal, TextInput, ToastAndroid,Alert } from 'react-native'
 import Icon from 'react-native-vector-icons/FontAwesome';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 const height = Dimensions.get('screen').height;
 
 
 export default function ConsumerProfile({ navigation }) {
     const [editprofile, seteditprofile] = useState(false);
-    const [name,setName] = useState('Naveen Kumar');
-    const [contact,setContact] =  useState('8529654124');
-    const [location,setLocation] = useState('IIT Guwahati'); 
-    var nameString=name;
-    var contactString=contact;
-    var locationString=location;
+    const [name, setName] = useState('Naveen Kumar');
+    const [contact, setContact] = useState('8529654124');
+    const [location, setLocation] = useState('IIT Guwahati');
+    var nameString = name;
+    var contactString = contact;
+    var locationString = location;
+    const signOut = async () => {
+            Alert.alert("Warning", "Are You Sure !", [{
+                text: "Cancel",
+                style: "cancel"
+            },
+            {
+                text: "Sure", onPress: async() => {
+                    await AsyncStorage.clear();
+                    ToastAndroid.showWithGravity("Sign Out SucessFully!",
+                        ToastAndroid.LONG, ToastAndroid.BOTTOM);
+                    navigation.navigate('My Profile')
+                }
+            }
+            ]);
+
+    }
     return (
         <View style={{ flex: 1, backgroundColor: '#fff' }}>
 
             {/* User Information */}
-            <View style={{ backgroundColor: '#00af91', elevation: 10, height: 3*height / 7 , borderBottomRightRadius: 30, borderBottomLeftRadius: 5 }}>
+            <View style={{ backgroundColor: '#00af91', elevation: 10, height: 3 * height / 7, borderBottomRightRadius: 30, borderBottomLeftRadius: 5 }}>
                 <View style={{ flexDirection: 'row', backgroundColor: '#00af91' }}>
                     <Icon name='arrow-left' style={{ marginTop: 40, marginLeft: 40, marginBottom: 20 }} size={25} color='#fff' onPress={() => navigation.navigate('FoodCart')} />
                     <View style={{ alignItems: 'flex-end', flex: 1 }}>
@@ -29,15 +46,15 @@ export default function ConsumerProfile({ navigation }) {
                     <View style={{ flex: 1, marginLeft: 10, justifyContent: 'center', alignContent: 'center' }}>
                         <Text
                             style={{ fontSize: 30, color: '#00af91' }}
-                        >{""+name.toString()}
-                                </Text>
+                        >{"" + name.toString()}
+                        </Text>
 
 
                         <Text
                             style={{ color: '#00af91', marginVertical: 5, fontSize: 15 }}
                         >
-                            {""+contact.toString()}
-                                    </Text>
+                            {"" + contact.toString()}
+                        </Text>
 
 
                         <Text
@@ -45,7 +62,7 @@ export default function ConsumerProfile({ navigation }) {
 
                         >
                             <Icon name='map-marker' color="#d89216" size={17} style={{}} /> {location}
-                            </Text>
+                        </Text>
 
                     </View>
                 </View>
@@ -73,7 +90,7 @@ export default function ConsumerProfile({ navigation }) {
                                             defaultValue={name}
                                             maxLength={20}
                                             placeholderTextColor='#00af91'
-                                            onChangeText={(text)=>{if(text!="")nameString=""+text}}
+                                            onChangeText={(text) => { if (text != "") nameString = "" + text }}
                                         />
 
 
@@ -83,7 +100,7 @@ export default function ConsumerProfile({ navigation }) {
                                             keyboardType='phone-pad'
                                             placeholderTextColor='#00af91'
                                             maxLength={10}
-                                            onChangeText={(text)=>{if(text!="")contactString=""+text}}
+                                            onChangeText={(text) => { if (text != "") contactString = "" + text }}
                                         />
 
 
@@ -95,7 +112,7 @@ export default function ConsumerProfile({ navigation }) {
                                             defaultValue={location}
                                             placeholderTextColor='#d89216'
                                             maxLength={25}
-                                            onChangeText={(text)=>{if(text!="")locationString=""+text}}
+                                            onChangeText={(text) => { if (text != "") locationString = "" + text }}
                                         />
 
 
@@ -115,16 +132,16 @@ export default function ConsumerProfile({ navigation }) {
                                         <Text style={styles.text, { color: '#00af91' }}>Cencel</Text>
 
                                     </TouchableOpacity>
-                                    <TouchableOpacity 
-                                    activeOpacity={0.8} 
-                                    style={styles.button} 
-                                    onPress={() => {
-                                        seteditprofile(false);
-                                        setName(nameString);
-                                        setContact(contactString);
-                                        setLocation(locationString);
-                                    
-                                    }}>
+                                    <TouchableOpacity
+                                        activeOpacity={0.8}
+                                        style={styles.button}
+                                        onPress={() => {
+                                            seteditprofile(false);
+                                            setName(nameString);
+                                            setContact(contactString);
+                                            setLocation(locationString);
+
+                                        }}>
 
                                         <Text style={styles.text, { color: '#fff' }}>Done</Text>
 
@@ -204,7 +221,7 @@ export default function ConsumerProfile({ navigation }) {
                 </TouchableOpacity>
                 <View style={{ borderBottomWidth: 1, borderBottomColor: "#ddd", marginHorizontal: 10 }}></View>
 
-                <TouchableOpacity style={{ margin: 10, flexDirection: 'row', alignItems: 'center' }} activeOpacity={0.8}>
+                <TouchableOpacity style={{ margin: 10, flexDirection: 'row', alignItems: 'center' }} activeOpacity={0.8} onPress={() => signOut()}>
                     <Icon name='sign-out' color='#00af91' size={23} style={{ marginLeft: 20, marginRight: 10 }} />
                     <Text style={{ color: '#00af91', fontSize: 23 }}>
                         Log Out

@@ -1,6 +1,6 @@
-import React, { useRef } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, TextInput, ScrollView, Dimensions } from 'react-native';
-import { pink200 } from 'react-native-paper/lib/typescript/styles/colors';
+import React, { useRef, useState } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, TextInput, ScrollView, Dimensions, Alert, ToastAndroid } from 'react-native';
+
 import Icon from 'react-native-vector-icons/FontAwesome';
 const height = Dimensions.get('window').height;
 
@@ -9,12 +9,34 @@ function Consumer({ navigation }) {
     const pin2 = useRef();
     const pin3 = useRef();
     const pin4 = useRef();
+    const [userName, setUserName] = useState("");
+    const [contact, setContact] = useState("");
+    const [password, setPassword] = useState("");
+    const [address, setAddress] = useState("");
+
+    const createAcc = () => {
+        Alert.alert("Alert", "Please Chack All Details", [
+            {
+                text: 'Cencel',
+                style: 'cancel'
+            },
+            {
+                text: 'Register',
+                onPress: () => {
+                    ToastAndroid.showWithGravity("Created account SucessFully!",
+                        ToastAndroid.LONG, ToastAndroid.BOTTOM);
+                    navigation.navigate("ConsumerProfile");
+                }
+            }
+        ])
+        
+    }
     return (
 
         <ScrollView >
             <View style={styles.upperView}>
                 <View style={{ flexDirection: 'row', }}>
-                    <Icon name='arrow-left' style={{ marginLeft: 40,marginTop:40 }} size={25} color='#fff' onPress={() => navigation.navigate('LogInConsumer')} />
+                    <Icon name='arrow-left' style={{ marginLeft: 40, marginTop: 40 }} size={25} color='#fff' onPress={() => navigation.navigate('LogInConsumer')} />
                     <View style={{ alignItems: 'flex-end', flex: 1 }}>
                         <Text style={styles.name}>Consumer</Text>
 
@@ -32,6 +54,7 @@ function Consumer({ navigation }) {
                         placeholder='Please Enter Your Name'
                         placeholderTextColor='#ccc'
                         style={styles.input}
+                        onChangeText={(text) => setUserName(text)}
                     />
 
                 </View>
@@ -45,11 +68,12 @@ function Consumer({ navigation }) {
                         placeholderTextColor='#ccc'
                         keyboardType='phone-pad'
                         style={styles.input}
+                        onChangeText={(text) => setContact(text)}
                     />
 
                 </View>
                 <Text style={{ marginHorizontal: 80, marginBottom: 5, fontSize: 15, color: '#fff' }}>
-                        <Text style={{color:'red'}}>*</Text>Make Your Password
+                    <Text style={{ color: 'red' }}>*</Text>Make Your Password
                         </Text>
                 <View style={{ marginBottom: 20 }}>
 
@@ -57,6 +81,7 @@ function Consumer({ navigation }) {
                         placeholder='Please Enter Your Password'
                         placeholderTextColor='#ccc'
                         style={styles.input}
+                        onChangeText={(text) => setPassword(text)}
                     />
 
                 </View>
@@ -71,6 +96,7 @@ function Consumer({ navigation }) {
                         placeholder='Please Enter Your Address (Optional)'
                         placeholderTextColor='#ccc'
                         style={styles.input}
+                        onChangeText={(text) => setAddress(text)}
                     />
                     <TouchableOpacity activeOpacity={0.8} style={{ flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'flex-end', marginEnd: 80, marginBottom: 10 }}>
                         <Icon name='map-marker' color="#fff" size={20} style={{}} />
@@ -101,7 +127,7 @@ function Consumer({ navigation }) {
                     <TextInput ref={pin4} placeholder='_' placeholderTextColor='#ccc' style={{ borderWidth: 2, borderColor: '#00af91', width: 40, textAlign: 'center', fontSize: 20, color: '#00af91', marginHorizontal: 5, borderRadius: 10 }} maxLength={1} keyboardType='numeric' />
 
                 </View>
-                <TouchableOpacity style={styles.signinbtn} activeOpacity={0.8} onPress={() => navigation.navigate('ConsumerProfile')}>
+                <TouchableOpacity style={styles.signinbtn} activeOpacity={0.8} onPress={() => createAcc()}>
                     <Text style={{ fontSize: 20, fontWeight: '300', color: '#00af91' }}>
                         Create Account
                 </Text>
@@ -148,7 +174,7 @@ const styles = StyleSheet.create({
     },
     name: {
         marginRight: 40,
-        marginTop:40,
+        marginTop: 40,
         fontSize: 25,
         color: '#fff',
     },

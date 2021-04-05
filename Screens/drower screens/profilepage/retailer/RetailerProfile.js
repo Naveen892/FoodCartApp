@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
-import { View, Text, ScrollView, Image, StyleSheet, Dimensions, TouchableOpacity, Modal, TextInput } from 'react-native'
+import { View, Text, ScrollView, Image, StyleSheet, Dimensions, TouchableOpacity, Modal, TextInput,Alert,ToastAndroid } from 'react-native'
 import Icon from 'react-native-vector-icons/FontAwesome';
 import RatingBar from '/home/naveen/FoodCart/Screens/ratingBar';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 const height = Dimensions.get('screen').height;
 
 
@@ -15,6 +16,22 @@ export default function RetailerProfile({ navigation }) {
     var contactString = contact;
     var locationString = location;
     var emailString = email;
+    const signOut = async () => {
+        Alert.alert("Warning", "Are You Sure !", [{
+            text: "Cancel",
+            style: "cancel"
+        },
+        {
+            text: "Sure", onPress: async() => {
+                await AsyncStorage.clear();
+                ToastAndroid.showWithGravity("Sign Out SucessFully!",
+                    ToastAndroid.LONG, ToastAndroid.BOTTOM);
+                navigation.navigate('My Profile')
+            }
+        }
+        ]);
+
+}
     return (
         <View style={{ flex: 1, backgroundColor: '#fff' }}>
 
@@ -35,7 +52,7 @@ export default function RetailerProfile({ navigation }) {
                             style={{ fontSize: 30, color: '#00af91' }}
                         >{"" + name.toString()}
                         </Text>
-                        <RatingBar rating={4}/>
+                        <RatingBar rating={4} />
                         <Text
                             style={{ color: '#00af91', marginTop: 5, fontSize: 15 }}
                         >
@@ -63,7 +80,7 @@ export default function RetailerProfile({ navigation }) {
                     <Icon name='edit' color='#fff' size={25} onPress={() => seteditprofile(true)} />
                     <Text style={{ color: '#fff', fontSize: 20 }} onPress={() => seteditprofile(true)}  > Edit Profile</Text>
                 </TouchableOpacity>
-                
+
 
 
                 {/* Modal for Edit Consumer Profile*/}
@@ -234,7 +251,7 @@ export default function RetailerProfile({ navigation }) {
                 </TouchableOpacity>
                 <View style={{ borderBottomWidth: 1, borderBottomColor: "#ddd", marginHorizontal: 10 }}></View>
 
-                <TouchableOpacity style={{ margin: 10, flexDirection: 'row', alignItems: 'center' }} activeOpacity={0.8}>
+                <TouchableOpacity style={{ margin: 10, flexDirection: 'row', alignItems: 'center' }} activeOpacity={0.8} onPress={()=>signOut()}>
                     <Icon name='sign-out' color='#00af91' size={23} style={{ marginLeft: 20, marginRight: 10 }} />
                     <Text style={{ color: '#00af91', fontSize: 23 }}>
                         Log Out

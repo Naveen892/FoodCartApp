@@ -1,41 +1,52 @@
-import React , {useState,useEffect} from 'react';
-import { View, Text, StatusBar, FlatList, ImageBackground, StyleSheet,Dimensions } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, StatusBar, FlatList, ImageBackground, StyleSheet, Dimensions, RefreshControl } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import SearchBar from 'react-native-searchbar';
 import OneCard from '/home/naveen/FoodCart/Screens/OneCard.js';
-const height=Dimensions.get('window').height;
-const width =Dimensions.get('window').width;
-const columns = 2;
+const height = Dimensions.get('window').height;
+const width = Dimensions.get('window').width;
 function products({ navigation }) {
 
-const [data, setData] = useState([]);
+    const [data, setData] = useState([]);
+    const [refreshing, setRefreshing] = useState(false);
 
-    useEffect(() => {
-        fetch('http://10.150.42.223:8000/api/products/',{
-            method:"GET"
-        })
-          .then((response) => response.json())
-          .then(json => setData(json))
-          .catch(error => console.log('error'))
-      } , []);
+    function getData() {
+        {
+            fetch('http://10.4.13.1:8000/api/products/', {
+                method: "GET"
+            })
+                .then((response) => response.json())
+                .then(json => setData(json))
+                .catch(error => console.log(error))
+        }
+    }
+    useEffect(() => getData(), []);
+
+    function onRefresh() {
+        setRefreshing(true);
+
+        getData();
+        setTimeout(() => { setRefreshing(false); }, 500)
+
+    }
     return (
         <View style={{ flex: 1 }}>
-            
-            <View style={{ height:height/11, backgroundColor: '#00af91', flexDirection: 'row', alignItems: 'center',elevation:10 }}>
-            <SearchBar
-                
-                ref={(ref) => searchBar2 = ref}
-                heightAdjust={height/65}
 
-            />
-                <Icon name='arrow-left' color='#fff' size={25} style={{ marginLeft: 30 }} onPress={() => {navigation.navigate('FoodCart')}} />
+            <View style={{ height: height / 11, backgroundColor: '#00af91', flexDirection: 'row', alignItems: 'center', elevation: 10 }}>
+                <SearchBar
+
+                    ref={(ref) => searchBar2 = ref}
+                    heightAdjust={height / 65}
+
+                />
+                <Icon name='arrow-left' color='#fff' size={25} style={{ marginLeft: 30 }} onPress={() => { navigation.navigate('FoodCart') }} />
 
                 <Text style={{ fontSize: 22, marginLeft: 20, color: '#fff', fontWeight: 'bold' }}>
                     Products
                 </Text>
-                <View style={{ flex: 1,justifyContent:'flex-end',  marginEnd: width / 15 ,flexDirection:'row'}}>
+                <View style={{ flex: 1, justifyContent: 'flex-end', marginEnd: width / 15, flexDirection: 'row' }}>
                     <View >
-                        <Icon name='search' color='#fff' size={width/17} onPress={() => searchBar2.show()} />
+                        <Icon name='search' color='#fff' size={width / 17} onPress={() => searchBar2.show()} />
                     </View>
 
                 </View>
@@ -48,6 +59,11 @@ const [data, setData] = useState([]);
                     data={data}
                     renderItem={({ item }) => OneCard(item, { navigation })}
                     keyExtractor={(item) => '' + item.id}
+                    refreshControl={<RefreshControl
+                        colors={["#00af91", "#689F38"]}
+                        refreshing={refreshing}
+                        onRefresh={onRefresh}
+                    />}
                 />
 
             </View>

@@ -1,20 +1,19 @@
-import React from 'react';
+import React  from 'react';
 import RatingBar from '/home/naveen/FoodCart/Screens/ratingBar.js';
 import { Text, View, Button, TouchableOpacity, Image, StyleSheet, Dimensions, TextInput } from 'react-native';
 
 import Quantitiy from '/home/naveen/FoodCart/Screens/quantity'
 const width = Dimensions.get('window').width;
 
-export default function OneCard(props, { navigation }) {
-    
-    
+export default function cartCard(props, { navigation }) {
+    var total=0;
     return (
         <View style={styles.card} >
             <View style={{alignContent:'center',justifyContent:'center',alignItems:'center'}}>
             <TouchableOpacity style={{ margin: 10, elevation: 10, width: 2*width / 7, backgroundColor: 'white', height: 2*width / 7, borderRadius: 7, alignItems: 'center' }} activeOpacity={0.8} onPress={() => navigation.navigate('Discription', { price: props.price, rating: props.rating, grade: props.grade, image: props.image, name: props.name })}>
                 
                 <Image style={styles.image}
-                    source={{uri:"http://10.150.40.146:8000/" + props.image}}
+                    source={{uri:"http://10.4.13.1:8000/" + props.image}}
                 />
             </TouchableOpacity>
             <Text style={{color:'#00af91',marginTop:5}}>
@@ -28,25 +27,16 @@ export default function OneCard(props, { navigation }) {
                     <View style={{ margin: 15, marginBottom: 5,marginEnd:25 }}>
 
                         <Text style={styles.text, {fontSize: width/27, marginBottom: 10, fontWeight: 'bold' }}>Price - {'\u20B9'} {props.price}</Text>
-                        <RatingBar rating={props.rating} />
+                        <Text>Total - {total}</Text>
 
                     </View>
                     <View style={styles.btns, { margin: 0 }}>
                         <TouchableOpacity activeOpacity={0.8} style={styles.button}>
-                            <Text style={styles.text}>Add</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity activeOpacity={0.8} style={styles.button}>
-                            <Text style={styles.text }>Buy Now</Text>
+                            <Text style={styles.text}>Remove</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
-
-                <View style={{ marginLeft: 15,marginTop:7 }}>
-                    <Text style={{fontSize:width/30}}>
-                        Discription : {(props.description).length<12 ? props.description:(""+props.description).substring(0,12)+"..."}
-                    </Text>
-                </View>
-                <Quantitiy maxq={10}/>
+                <Quantitiy maxq={10} Quantitiy={(q)=>{total=q}}/>
                 
             </View>
 

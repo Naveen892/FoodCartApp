@@ -11,12 +11,19 @@ import Fruits from './Fruits';
 
 import All from './All';
 import MyCart from './MyCart';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { View, Text, Dimensions } from 'react-native';
 
 const height = Dimensions.get('window').height;
 const width = Dimensions.get('window').width;
 const Tab = createMaterialTopTabNavigator();
 function Tabs({ navigation }) {
+    const goToProfile = async() => {
+        const isLoggedIn = await AsyncStorage.getItem('isLoggedIn');
+         navigation.navigate(
+            isLoggedIn === '1' ? 'ConsumerProfile' : (isLoggedIn==='2' ? 'RetailerProfile':'My Profile')
+            );
+    }
     return (
         <View style={{ flex: 1 }}>
             <View style={{ height: height / 15, backgroundColor: '#00af91', flexDirection: 'row', alignItems: 'center', }}>
@@ -34,7 +41,7 @@ function Tabs({ navigation }) {
                         <Icon name='search' color='#fff' size={width/17} onPress={() => searchBar1.show()} />
                     </View>
                     <View >
-                        <Icon name='user-circle-o' color='#fff' size={width/16} onPress={() => navigation.navigate('My Profile')} />
+                        <Icon name='user-circle-o' color='#fff' size={width/16} onPress={() => goToProfile()} />
                     </View>
 
                 </View>

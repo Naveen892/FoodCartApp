@@ -1,10 +1,40 @@
-import React ,{useRef} from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, TextInput, ScrollView, Dimensions } from 'react-native';
+import React ,{useState,useEffect} from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, TextInput, ScrollView, Dimensions,Vibration,ToastAndroid } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 const height = Dimensions.get('window').height;
 
 function LogInConsumer({ navigation }) {
+    const [username,setUserName] = useState("");
+    const [password,setPassword] = useState("");
+
+    useEffect(() => {
+        const unsubscribe = navigation.addListener('focus', () => {
+          console.log('Refreshed!');
+          window.location.reload(false);
+        });
+        return unsubscribe;
+      }, [navigation]);
+
+
     
+    
+    const logIn=async()=>{
+        if(username === user && password === pass){
+            navigation.navigate('ConsumerProfile')
+            await AsyncStorage.setItem('isLoggedIn', '1')
+        }
+        else{
+            ToastAndroid.show("Incorrect User Name or Password",
+                
+                ToastAndroid.LONG,ToastAndroid.BOTTOM);
+            Vibration.vibrate(600);
+    
+        }
+    }
+    const user='Naveen';
+    const pass='Naveen@123';
+
     return (
         <ScrollView>
             <View style={{ flex: 1, height: height }}>
@@ -26,14 +56,14 @@ function LogInConsumer({ navigation }) {
                     </View>
                     
                     <Text style={{ marginHorizontal: 80, marginBottom: 5, fontSize: 15, color: '#fff' }}>
-                        <Text style={{color:'red'}}>*</Text>Your Contact Number
+                        <Text style={{color:'red'}}>*</Text>Your UserName
                         </Text>
                     <View style={styles.input}>
 
                         <TextInput
-                            placeholder='Please Enter Your Mobile Number'
+                            placeholder='Please Enter Your User Name'
                             placeholderTextColor='#ccc'
-                            keyboardType='phone-pad'
+                            onChangeText={(text)=>setUserName(text)}
                         />
 
                     </View>
@@ -45,6 +75,7 @@ function LogInConsumer({ navigation }) {
                         <TextInput
                             placeholder='Please Enter Your Password'
                             placeholderTextColor='#ccc'
+                            onChangeText={(text)=>setPassword(text)}
                         />
 
                     </View>
@@ -61,7 +92,7 @@ function LogInConsumer({ navigation }) {
                             </Text>
                         </TouchableOpacity>
                     </View>
-                    <TouchableOpacity style={styles.loginbtn} activeOpacity={0.8} onPress={()=>navigation.navigate('ConsumerProfile')}>
+                    <TouchableOpacity style={styles.loginbtn} activeOpacity={0.8} onPress={()=>logIn()}>
                         <Text style={{ fontSize: 20, fontWeight: '300', color: '#fff' }}>
                             LogIn
                 </Text>
