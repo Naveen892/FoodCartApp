@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text, View, Button, TouchableOpacity, Image, StyleSheet, Dimensions } from 'react-native';
-
+import {color} from "/home/naveen/FoodCart/imp.js";
 const width = Dimensions.get('window').width;
 
 
@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
 
     },
     button: {
-        backgroundColor: "#00af91",
+        backgroundColor: color,
         alignItems: 'center',
         width: 100,
         borderColor: '#fff',

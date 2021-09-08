@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { Text, View, Button, TouchableOpacity, Image, StyleSheet, Dimensions } from 'react-native';
+import {color} from "/home/naveen/FoodCart/imp.js";
 const width = Dimensions.get('window').width;
 import Icon from 'react-native-vector-icons/FontAwesome'
 
@@ -16,7 +17,7 @@ export default function orederHistoryCard(props, { navigation }) {
 
         <TouchableOpacity style={styles.card} activeOpacity={0.9} >
             <View style={{flexDirection:'row',alignItems:'center'}}>
-                <Icon name='check-square-o' size={60} color='#00af91' style={{ marginLeft: 20 }} />
+                <Icon name='check-square-o' size={60} color={color} style={{ marginLeft: 20 }} />
                 <View style={{ marginLeft: 30 }}>
                     <Text style={{ fontSize: 20, fontWeight: 'bold',marginBottom:10 }}>
                         {props.type}

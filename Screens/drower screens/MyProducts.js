@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StatusBar, FlatList, ImageBackground, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-
+import {color} from "/home/naveen/FoodCart/imp.js";
 import MyProductCard from '/home/naveen/FoodCart/Screens/drower screens/profilepage/MyProductCard';
 
 const columns = 2;
@@ -19,7 +19,7 @@ function MyProducts({ navigation }) {
     ];
     return (
         <View style={{ flex: 1 }}>
-            <View style={{ flex: 0.09, backgroundColor: '#00af91', flexDirection: 'row', alignItems: 'center',elevation:10 }}>
+            <View style={{ flex: 0.09, backgroundColor: color, flexDirection: 'row', alignItems: 'center',elevation:10 }}>
                 <Icon name='arrow-left' color='#fff' size={25} style={{ marginLeft: 30 }} onPress={() => {navigation.navigate('RetailerProfile')}} />
 
                 <Text style={{ fontSize: 22, marginLeft: 20, color: '#fff', fontWeight: 'bold' }}>
@@ -27,7 +27,7 @@ function MyProducts({ navigation }) {
                 </Text>
             </View>
             <View style={{ flex: 1 }}>
-                <StatusBar backgroundColor="#00af91" />
+                <StatusBar backgroundColor={color} />
 
                 <FlatList
                     key={(item) => '' + item.type}

@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-
+import {color} from "/home/naveen/FoodCart/imp.js";
 function Profile({ navigation }) {
   return (
     <View style={{ flex: 1 }}>
@@ -34,12 +34,12 @@ function Profile({ navigation }) {
         </TouchableOpacity>
         <View style={{  flexDirection: 'row' ,justifyContent:'center' }}>
           <TouchableOpacity style={styles.privacy} activeOpacity={0.8}>
-            <Text style={{ fontSize: 15, fontWeight: '200', color: '#00af91',textDecorationLine: 'underline' }}>
+            <Text style={{ fontSize: 15, fontWeight: '200', color: color,textDecorationLine: 'underline' }}>
               Terms and condition
                 </Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.privacy} activeOpacity={0.8}>
-            <Text style={{ fontSize: 15, fontWeight: '200', color: '#00af91',textDecorationLine: 'underline' }}>
+            <Text style={{ fontSize: 15, fontWeight: '200', color: color,textDecorationLine: 'underline' }}>
               Privacy policy
                 </Text>
           </TouchableOpacity>
@@ -57,7 +57,7 @@ export default Profile;
 const styles = StyleSheet.create({
   upperView: {
     flex: 2,
-    backgroundColor: '#00af91',
+    backgroundColor: color,
     borderBottomLeftRadius: 50,
     borderBottomRightRadius: 50,
     flexDirection: 'column',
@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 60,
     marginBottom: 30,
     alignItems: 'center',
-    backgroundColor: '#00af91',
+    backgroundColor: color,
     borderColor:'#fff',
         borderWidth:2,
     padding: 5,

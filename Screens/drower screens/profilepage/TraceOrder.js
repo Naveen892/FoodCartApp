@@ -1,8 +1,26 @@
-import React from 'react';
-import { View, Text, StatusBar, FlatList, ImageBackground, StyleSheet } from 'react-native';
+import React,{useEffect} from 'react';
+import { View, Text, StatusBar, FlatList, ImageBackground, StyleSheet,BackHandler } from 'react-native';
 import TraceCard from '/home/naveen/FoodCart/Screens/drower screens/profilepage/TraceCard.js';
-
+import {color} from "/home/naveen/FoodCart/imp.js";
 function TraceOrder({ navigation }) {
+
+    function handleBackButtonClick() {
+        console.log('back ');
+        
+            navigation.goBack();
+            
+            return true;
+       
+      }
+      const backHandler = BackHandler.addEventListener(
+        "hardwareBackPress",
+        handleBackButtonClick
+      );
+      useEffect(() => {
+            
+          return () => backHandler.remove();
+        
+      }, [navigation]);
 
     const data = [
         { image: 'https://freepngimg.com/thumb/potato/10-potato-png-images-pictures-download-thumb.png', type: 'Potato', price: 20, grade: 'A' },
@@ -17,7 +35,7 @@ function TraceOrder({ navigation }) {
     return (
         <View style={{ flex: 1 }}>
             <View style={{ flex: 1 }}>
-                <StatusBar backgroundColor="#00af91" />
+                <StatusBar backgroundColor={color} />
 
                 <FlatList
                     key={(item) => '' + item.type}

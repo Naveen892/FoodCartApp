@@ -15,6 +15,7 @@ import {
 } from '@react-navigation/drawer'
 import Icon from 'react-native-vector-icons/FontAwesome';
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import {color} from "/home/naveen/FoodCart/imp.js";
 export default function Drawerx(props) {
     const onShare = async () => {
         props.navigation.closeDrawer();
@@ -34,6 +35,35 @@ export default function Drawerx(props) {
             isLoggedIn === '1' ? 'ConsumerProfile' : (isLoggedIn === '2' ? 'RetailerProfile' : 'My Profile')
         );
     }
+    const myOrder = async () =>{
+        const isLoggedIn = await AsyncStorage.getItem('isLoggedIn');
+        if(isLoggedIn==='1' || isLoggedIn==='2'){
+            props.navigation.navigate('MyOrder')
+        }else{
+            Alert.alert("Thanks", "You Are AllReady Signed Out", [
+                {
+                    text: "Cancel",
+                    style: "cancel"
+                },
+                { text: "Please Log In", onPress: () => props.navigation.navigate('My Profile') }
+            ]);
+        }
+    }
+    const myOffer = async () =>{
+        const isLoggedIn = await AsyncStorage.getItem('isLoggedIn');
+        if(isLoggedIn==='1' || isLoggedIn==='2'){
+            props.navigation.navigate('Offers')
+        }else{
+            Alert.alert("Thanks", "You Are AllReady Signed Out", [
+                {
+                    text: "Cancel",
+                    style: "cancel"
+                },
+                { text: "Please Log In", onPress: () => props.navigation.navigate('My Profile') }
+            ]);
+        }
+    }
+    
     const signOut = async () => {
 
         props.navigation.closeDrawer();
@@ -110,7 +140,7 @@ export default function Drawerx(props) {
                                 size={22}
                             />
                         )}
-                        onPress={() => { props.navigation.navigate('MyOrder') }}
+                        onPress={() => myOrder()}
                     />
                     <DrawerItem
                         label='Offers'
@@ -122,7 +152,7 @@ export default function Drawerx(props) {
                                 size={22}
                             />
                         )}
-                        onPress={() => { props.navigation.navigate('Offers') }}
+                        onPress={() =>  myOffer()}
                     />
                 </Drawer.Section>
                 <Drawer.Section title={<Text style={{ color: '#fff' }}>Other</Text>}
@@ -202,7 +232,7 @@ const styles = StyleSheet.create({
     },
     window: {
         flex: 1,
-        backgroundColor: '#00af91',
+        backgroundColor: color,
 
 
     }

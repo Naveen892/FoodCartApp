@@ -1,19 +1,43 @@
 import React, { useRef } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, TextInput, ScrollView, Dimensions } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, TextInput, ScrollView, Dimensions, Alert, ToastAndroid } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {color} from "/home/naveen/FoodCart/imp.js";
 const height = Dimensions.get('window').height;
-
+const width = Dimensions.get('window').width;
 function Retailer({ navigation }) {
     const pin1 = useRef();
     const pin2 = useRef();
     const pin3 = useRef();
     const pin4 = useRef();
+
+    const createAcc = () => {
+        Alert.alert("Alert", "Please Chack All Details", [
+            {
+                text: 'Cencel',
+                style: 'cancel'
+            },
+            {
+                text: 'Register',
+                onPress: () => {
+
+                    ToastAndroid.showWithGravity("Created account SucessFully!",
+                        ToastAndroid.LONG, ToastAndroid.BOTTOM);
+                    navigation.navigate('RetailerProfile')
+
+                    AsyncStorage.setItem('isLoggedIn', '2');
+                    AsyncStorage.setItem('cartItem', {})
+                }
+            }
+        ])
+
+    }
     return (
 
         <ScrollView >
             <View style={styles.upperView}>
                 <View style={{ flexDirection: 'row', }}>
-                    <Icon name='arrow-left' style={{ marginLeft: 40,marginTop:40 }} size={25} color='#fff' onPress={() => navigation.navigate('LogInConsumer')} />
+                    <Icon name='arrow-left' style={{ marginLeft: 40, marginTop: 40 }} size={25} color='#fff' onPress={() => navigation.navigate('LogInRetailer')} />
                     <View style={{ alignItems: 'flex-end', flex: 1 }}>
                         <Text style={styles.name}>Retailer</Text>
 
@@ -24,89 +48,95 @@ function Retailer({ navigation }) {
                 </View>
                 <Text style={{ marginHorizontal: 80, marginBottom: 5, fontSize: 15, color: '#fff' }}>
                     <Text style={{ color: 'red' }}>*</Text>Your Name
-                        </Text>
-                <View style={{ marginBottom: height/50 }}>
+                </Text>
+                <View style={styles.input}>
 
                     <TextInput
+                    allowFontScaling={false}
                         placeholder='Please Enter Your Name'
                         placeholderTextColor='#ccc'
-                        style={styles.input}
+
                     />
 
                 </View>
                 <Text style={{ marginHorizontal: 80, marginBottom: 5, fontSize: 15, color: '#fff' }}>
                     <Text style={{ color: 'red' }}>*</Text>Your Contact Number
-                        </Text>
-                <View style={{ marginBottom: height/50 }}>
+                </Text>
+                <View style={styles.input}>
 
                     <TextInput
+                    allowFontScaling={false}
                         placeholder='Please Enter Your Mobile Number'
                         placeholderTextColor='#ccc'
                         keyboardType='phone-pad'
-                        style={styles.input}
+
                     />
 
                 </View>
                 <Text style={{ marginHorizontal: 80, marginBottom: 5, fontSize: 15, color: '#fff' }}>
                     <Text style={{ color: 'red' }}>*</Text>Your Email Address
-                        </Text>
-                <View style={{ marginBottom: height/50 }}>
+                </Text>
+                <View style={styles.input}>
 
                     <TextInput
+                    allowFontScaling={false}
                         placeholder='Please Enter Your Email Address'
                         placeholderTextColor='#ccc'
                         keyboardType='email-address'
-                        style={styles.input}
+
                     />
 
                 </View>
                 <Text style={{ marginHorizontal: 80, marginBottom: 5, fontSize: 15, color: '#fff' }}>
-                        <Text style={{color:'red'}}>*</Text>Make Your Password
-                        </Text>
-                <View style={{ marginBottom: height/50 }}>
+                    <Text style={{ color: 'red' }}>*</Text>Make Your Password
+                </Text>
+                <View style={styles.input}>
 
                     <TextInput
+                    allowFontScaling={false}
                         placeholder='Please Enter Your Password'
                         placeholderTextColor='#ccc'
-                        style={styles.input}
+
                     />
 
                 </View>
 
                 <Text style={{ marginHorizontal: 80, marginBottom: 5, fontSize: 15, color: '#fff' }}>
                     <Text style={{ color: 'red' }}>*</Text>Set Your Brand Name
-                        </Text>
-                <View style={{ marginBottom: height/50 }}>
+                </Text>
+                <View style={styles.input}>
 
                     <TextInput
+                    allowFontScaling={false}
                         placeholder='Please Set Your Brand Name'
                         placeholderTextColor='#ccc'
-                        style={styles.input}
+
                     />
 
                 </View>
 
                 <Text style={{ marginLeft: 80, marginBottom: 5, fontSize: 15, color: '#fff' }}>
-                <Text style={{color:'red'}}>*</Text>Your Address 
-                        </Text>
+                    <Text style={{ color: 'red' }}>*</Text>Your Address
+                </Text>
 
-                <View style={{ marginBottom: 20 }}>
+                <View style={styles.input}>
 
                     <TextInput
+                    allowFontScaling={false}
                         placeholder='Please Enter Your Address'
                         placeholderTextColor='#ccc'
-                        style={styles.input}
-                    />
-                    <TouchableOpacity activeOpacity={0.8} style={{ flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'flex-end', marginEnd: 80, marginBottom: 10 }}>
-                        <Icon name='map-marker' color="#fff" size={20} style={{}} />
-                        <Text style={{ color: '#fff', marginLeft: 10, fontSize: 15 }}>
-                            Choose from map
-                            </Text>
 
-                    </TouchableOpacity>
+                    />
 
                 </View>
 
+                <TouchableOpacity activeOpacity={0.8} style={{ flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'flex-end', marginEnd: 80, marginBottom: 20 }}>
+                    <Icon name='map-marker' color="#fff" size={20} style={{}} />
+                    <Text style={{ color: '#fff', marginLeft: 10, fontSize: 15 }}>
+                        Choose from map
+                    </Text>
+
+                </TouchableOpacity>
 
 
 
@@ -114,33 +144,40 @@ function Retailer({ navigation }) {
             <View style={styles.lowerView}>
                 <View style={{ flex: 1, alignItems: 'flex-end', marginHorizontal: 30, marginTop: 20 }}>
                     <TouchableOpacity activeOpacity={0.8}>
-                        <Text style={{ fontSize: 15, color: '#00af91' }}>
+                        <Text style={{ fontSize: 15, color: color }}>
                             <Icon name='send-o' size={15} /> Send OTP
-                            </Text>
+                        </Text>
                     </TouchableOpacity>
                 </View>
-                <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', flexDirection: 'row', marginBottom: 20, marginTop: 20 }}>
-                    <TextInput ref={pin1} placeholder='_' placeholderTextColor='#ccc' onChangeText={(pin1) => { if (pin1 != "") { pin2.current.focus() } }} style={{ borderWidth: 2, borderColor: '#00af91', width: 40, textAlign: 'center', fontSize: 20, color: '#00af91', marginHorizontal: 5, borderRadius: 10 }} maxLength={1} keyboardType='numeric' />
-                    <TextInput ref={pin2} placeholder='_' placeholderTextColor='#ccc' onChangeText={(pin2) => { if (pin2 != "") { pin3.current.focus() } }} style={{ borderWidth: 2, borderColor: '#00af91', width: 40, textAlign: 'center', fontSize: 20, color: '#00af91', marginHorizontal: 5, borderRadius: 10 }} maxLength={1} keyboardType='numeric' />
-                    <TextInput ref={pin3} placeholder='_' placeholderTextColor='#ccc' onChangeText={(pin3) => { if (pin3 != "") { pin4.current.focus() } }} style={{ borderWidth: 2, borderColor: '#00af91', width: 40, textAlign: 'center', fontSize: 20, color: '#00af91', marginHorizontal: 5, borderRadius: 10 }} maxLength={1} keyboardType='numeric' />
-                    <TextInput ref={pin4} placeholder='_' placeholderTextColor='#ccc' style={{ borderWidth: 2, borderColor: '#00af91', width: 40, textAlign: 'center', fontSize: 20, color: '#00af91', marginHorizontal: 5, borderRadius: 10 }} maxLength={1} keyboardType='numeric' />
-
+                <View style={{ flex: 1, justifyContent: 'center', flexDirection: 'row', marginBottom: 20, marginTop: 20 }}>
+                    <View style={{ borderWidth: 2, borderColor: color, width: 40, marginHorizontal: 5, borderRadius: 10, alignItems: 'center', }}>
+                        <TextInput allowFontScaling={false} ref={pin1} placeholder='_' placeholderTextColor='#ccc' onChangeText={(pin1) => { if (pin1 != "") { pin2.current.focus() } }} style={{ marginHorizontal: 6, fontSize: 20, color: color }} maxLength={1} keyboardType='numeric' />
+                    </View>
+                    <View style={{ borderWidth: 2, borderColor: color, width: 40, marginHorizontal: 5, borderRadius: 10, alignItems: 'center', }}>
+                        <TextInput allowFontScaling={false} ref={pin2} placeholder='_' placeholderTextColor='#ccc' onChangeText={(pin2) => { if (pin2 != "") { pin3.current.focus() } }} style={{ marginHorizontal: 6, fontSize: 20, color: color }} maxLength={1} keyboardType='numeric' />
+                    </View>
+                    <View style={{ borderWidth: 2, borderColor: color, width: 40, marginHorizontal: 5, borderRadius: 10, alignItems: 'center', }}>
+                        <TextInput allowFontScaling={false} ref={pin3} placeholder='_' placeholderTextColor='#ccc' onChangeText={(pin3) => { if (pin3 != "") { pin4.current.focus() } }} style={{ marginHorizontal: 6, fontSize: 20, color: color }} maxLength={1} keyboardType='numeric' />
+                    </View>
+                    <View style={{ borderWidth: 2, borderColor: color, width: 40, marginHorizontal: 5, borderRadius: 10, alignItems: 'center', }}>
+                        <TextInput allowFontScaling={false} ref={pin4} placeholder='_' placeholderTextColor='#ccc' style={{ marginHorizontal: 6, fontSize: 20, color: color }} maxLength={1} keyboardType='numeric' />
+                    </View>
                 </View>
-                <TouchableOpacity style={styles.signinbtn} activeOpacity={0.8} onPress={() => navigation.navigate('RetailerProfile')}>
-                    <Text style={{ fontSize: 20, fontWeight: '300', color: '#00af91' }}>
+                <TouchableOpacity style={styles.signinbtn} activeOpacity={0.8} onPress={() => createAcc()}>
+                    <Text style={{ fontSize: 20, fontWeight: '300', color: color }}>
                         Create Account
-                </Text>
+                    </Text>
                 </TouchableOpacity>
                 <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
                     <TouchableOpacity style={styles.privacy} activeOpacity={0.8}>
-                        <Text style={{ fontSize: 15, fontWeight: '200', color: '#00af91', textDecorationLine: 'underline' }}>
+                        <Text style={{ fontSize: 15, fontWeight: '200', color: color, textDecorationLine: 'underline' }}>
                             Terms and condition
-                </Text>
+                        </Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.privacy} activeOpacity={0.8}>
-                        <Text style={{ fontSize: 15, fontWeight: '200', color: '#00af91', textDecorationLine: 'underline' }}>
+                        <Text style={{ fontSize: 15, fontWeight: '200', color: color, textDecorationLine: 'underline' }}>
                             Privacy policy
-                </Text>
+                        </Text>
                     </TouchableOpacity>
                 </View>
 
@@ -158,8 +195,8 @@ export default Retailer;
 
 const styles = StyleSheet.create({
     upperView: {
-        height:  height,
-        backgroundColor: '#00af91',
+        height: height,
+        backgroundColor: color,
         borderBottomLeftRadius: 50,
         borderBottomRightRadius: 50,
         flexDirection: 'column',
@@ -172,7 +209,7 @@ const styles = StyleSheet.create({
     },
     name: {
         marginRight: 40,
-        marginTop:40,
+        marginTop: 40,
         fontSize: 25,
         color: '#fff',
     },
@@ -180,7 +217,7 @@ const styles = StyleSheet.create({
         marginHorizontal: 60,
         marginBottom: 30,
         alignItems: 'center',
-        backgroundColor: '#00af91',
+        backgroundColor: color,
         borderColor: '#fff',
         borderWidth: 2,
         padding: 5,
@@ -200,7 +237,7 @@ const styles = StyleSheet.create({
         marginBottom: 30,
         alignItems: 'center',
         backgroundColor: '#fff',
-        borderColor: '#00af91',
+        borderColor: color,
         borderWidth: 2,
         padding: 5,
         borderBottomRightRadius: 20,
@@ -211,9 +248,9 @@ const styles = StyleSheet.create({
     },
     input: {
         marginHorizontal: 60,
-        marginBottom: 10,
-        textAlign: 'center',
-        backgroundColor: '#00af91',
+        marginBottom: height / 50,
+        alignItems: 'center',
+        backgroundColor: color,
         borderColor: '#fff',
         borderWidth: 2,
         borderBottomRightRadius: 20,

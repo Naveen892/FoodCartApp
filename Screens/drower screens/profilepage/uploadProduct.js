@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, ScrollView, TouchableOpacity, Dimensions, StyleSheet, TextInput, Image } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { RadioButton } from 'react-native-paper';
-
+import {color} from "/home/naveen/FoodCart/imp.js";
 import Quantitiy from '/home/naveen/FoodCart/Screens/quantity'
 const height = Dimensions.get('window').height;
 const width = Dimensions.get('window').width;
@@ -10,7 +10,7 @@ export default function UploadProduct({ navigation }) {
     const [checked, setChecked] = React.useState('A');
     return (
         <View style={{ flex: 1 }}>
-            <View style={{ height: height / 12, backgroundColor: '#00af91', flexDirection: 'row', alignItems: 'center', elevation: 10 }}>
+            <View style={{ height: height / 12, backgroundColor: color, flexDirection: 'row', alignItems: 'center', elevation: 10 }}>
                 <Icon name='arrow-left' color='#fff' size={25} style={{ marginLeft: 30 }} onPress={() => { navigation.navigate('RetailerProfile') }} />
 
                 <Text style={{ fontSize: 22, marginLeft: 20, color: '#fff', }}>
@@ -23,7 +23,7 @@ export default function UploadProduct({ navigation }) {
 
                     <View style={{ flexDirection: 'row', }}>
                         <View style={{alignItems:'center'}}>
-                            <Text style={{ fontSize: 15, color: '#00af91', marginTop: height / 20 }}>
+                            <Text style={{ fontSize: 15, color: color, marginTop: height / 20 }}>
                                 <Text style={{ color: 'red' }}>*</Text>Upload Image
                             </Text>
                             <View style={{ justifyContent: 'center', alignItems: 'center', width: width / 2, marginTop: 15 }}>
@@ -37,7 +37,7 @@ export default function UploadProduct({ navigation }) {
                         </View>
 
                         <View style={{}}>
-                            <Text style={{ fontSize: 15, color: '#00af91', marginTop: height / 20 }}>
+                            <Text style={{ fontSize: 15, color: color, marginTop: height / 20 }}>
                                 <Text style={{ color: 'red' }}>*</Text>Product Grade
                             </Text>
                             <View style={{ flexDirection: 'row', marginLeft: 15 }}>
@@ -85,49 +85,52 @@ export default function UploadProduct({ navigation }) {
 
 
                     </View>
-                    <Text style={{ marginLeft: height / 16, fontSize: 15, color: '#00af91', marginTop: height / 20 }}>
+                    <Text style={{ marginLeft: height / 16, fontSize: 15, color: color, marginTop: height / 20 }}>
                         <Text style={{ color: 'red' }}>*</Text>Product Name
                         </Text>
-                    <View style={{}}>
+                    <View style={styles.input}>
 
                         <TextInput
+                        allowFontScaling={false}
                             placeholder='Please Enter Name Of Product'
                             placeholderTextColor='#ccc'
-                            style={styles.input}
+                            style={{color:'black'}}
                         />
 
                     </View>
-                    <Text style={{ marginLeft: height / 16, fontSize: 15, color: '#00af91', marginTop: height / 30 }}>
+                    <Text style={{ marginLeft: height / 16, fontSize: 15, color: color, marginTop: height / 30 }}>
                         <Text style={{ color: 'red' }}>*</Text>Product Price
                         </Text>
-                    <View style={{}}>
+                    <View style={styles.input}>
 
                         <TextInput
+                        allowFontScaling={false}
                             placeholder='Please Enter Price Of Product'
                             placeholderTextColor='#ccc'
-                            style={styles.input}
+                            style={{color:'black'}}
                             keyboardType='decimal-pad'
                         />
 
                     </View>
 
 
-                    <Text style={{ marginLeft: height / 16, fontSize: 15, color: '#00af91', marginTop: height / 30 }}>
+                    <Text style={{ marginLeft: height / 16, fontSize: 15, color: color, marginTop: height / 30 }}>
                         <Text style={{ color: 'red' }}>*</Text>Product Discription
                         </Text>
-                    <View style={{}}>
+                    <View style={styles.input}>
 
                         <TextInput
+                        allowFontScaling={false}
                             placeholder='Please Enter Some Discription Of Product'
                             placeholderTextColor='#ccc'
-                            style={styles.input}
                             keyboardType='default'
+                            style={{color:'black'}}
                         />
 
                     </View>
 
 
-                    <Text style={{ marginLeft: height / 16, fontSize: 15, color: '#00af91', marginTop: height / 30 }}>
+                    <Text style={{ marginLeft: height / 16, fontSize: 15, color: color, marginTop: height / 30 }}>
                         <Text style={{ color: 'red' }}>*</Text>Max Quantity That you can Provide To Consumer
                         </Text>
                     <View style={{ alignItems: 'center' }}>
@@ -138,7 +141,7 @@ export default function UploadProduct({ navigation }) {
 
                 </ScrollView>
             </View>
-            <TouchableOpacity style={{ height: height / 18, backgroundColor: '#00af91', justifyContent: 'center', alignItems: 'center', flexDirection: 'row' }} activeOpacity={0.8}>
+            <TouchableOpacity style={{ height: height / 18, backgroundColor: color, justifyContent: 'center', alignItems: 'center', flexDirection: 'row' }} activeOpacity={0.8}>
                 <Icon name='upload' color='#fff' size={height / 40} style={{ marginRight: 10 }} /><Text style={{ fontSize: height / 40, color: '#fff' }}> Upload</Text>
             </TouchableOpacity>
         </View>
@@ -151,15 +154,14 @@ const styles = StyleSheet.create({
     input: {
         marginHorizontal: height / 20,
         marginBottom: 10,
-        textAlign: 'center',
+        alignItems:'center',
         backgroundColor: '#fff',
-        borderColor: '#00af91',
+        borderColor: color,
         borderWidth: 2,
         borderBottomRightRadius: 20,
         borderTopLeftRadius: 20,
         borderBottomLeftRadius: 5,
         borderTopRightRadius: 5,
         elevation: 7,
-        color: 'black'
     },
 })

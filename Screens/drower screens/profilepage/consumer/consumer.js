@@ -1,7 +1,8 @@
 import React, { useRef, useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, TextInput, ScrollView, Dimensions, Alert, ToastAndroid } from 'react-native';
-
+import {color} from "/home/naveen/FoodCart/imp.js";
 import Icon from 'react-native-vector-icons/FontAwesome';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 const height = Dimensions.get('window').height;
 
 function Consumer({ navigation }) {
@@ -23,9 +24,13 @@ function Consumer({ navigation }) {
             {
                 text: 'Register',
                 onPress: () => {
+                    
                     ToastAndroid.showWithGravity("Created account SucessFully!",
                         ToastAndroid.LONG, ToastAndroid.BOTTOM);
                     navigation.navigate("ConsumerProfile");
+
+                    AsyncStorage.setItem('isLoggedIn', '1');
+                    AsyncStorage.setItem('cartItem', {})
                 }
             }
         ])
@@ -48,12 +53,13 @@ function Consumer({ navigation }) {
                 <Text style={{ marginHorizontal: 80, marginBottom: 5, fontSize: 15, color: '#fff' }}>
                     <Text style={{ color: 'red' }}>*</Text>Your Name
                         </Text>
-                <View style={{ marginBottom: 20 }}>
+                <View style={styles.input}>
 
                     <TextInput
+                    allowFontScaling={false}
                         placeholder='Please Enter Your Name'
                         placeholderTextColor='#ccc'
-                        style={styles.input}
+                        
                         onChangeText={(text) => setUserName(text)}
                     />
 
@@ -61,13 +67,14 @@ function Consumer({ navigation }) {
                 <Text style={{ marginHorizontal: 80, marginBottom: 5, fontSize: 15, color: '#fff' }}>
                     <Text style={{ color: 'red' }}>*</Text>Your Contact Number
                         </Text>
-                <View style={{ marginBottom: 20 }}>
+                <View style={styles.input}>
 
                     <TextInput
+                    allowFontScaling={false}
                         placeholder='Please Enter Your Mobile Number'
                         placeholderTextColor='#ccc'
                         keyboardType='phone-pad'
-                        style={styles.input}
+                        
                         onChangeText={(text) => setContact(text)}
                     />
 
@@ -75,12 +82,13 @@ function Consumer({ navigation }) {
                 <Text style={{ marginHorizontal: 80, marginBottom: 5, fontSize: 15, color: '#fff' }}>
                     <Text style={{ color: 'red' }}>*</Text>Make Your Password
                         </Text>
-                <View style={{ marginBottom: 20 }}>
+                <View style={styles.input}>
 
                     <TextInput
+                    allowFontScaling={false}
                         placeholder='Please Enter Your Password'
                         placeholderTextColor='#ccc'
-                        style={styles.input}
+                        
                         onChangeText={(text) => setPassword(text)}
                     />
 
@@ -90,23 +98,25 @@ function Consumer({ navigation }) {
                     Your Address (Optional)
                         </Text>
 
-                <View style={{ marginBottom: 20 }}>
+                <View style={styles.input}>
 
                     <TextInput
+                    allowFontScaling={false}
                         placeholder='Please Enter Your Address (Optional)'
                         placeholderTextColor='#ccc'
-                        style={styles.input}
+                        
                         onChangeText={(text) => setAddress(text)}
                     />
-                    <TouchableOpacity activeOpacity={0.8} style={{ flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'flex-end', marginEnd: 80, marginBottom: 10 }}>
+                    
+
+                </View>
+                <TouchableOpacity allowFontScaling={false} activeOpacity={0.8} style={{ flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'flex-end', marginEnd: 80, marginBottom: 25 }}>
                         <Icon name='map-marker' color="#fff" size={20} style={{}} />
                         <Text style={{ color: '#fff', marginLeft: 10, fontSize: 15 }}>
                             Choose from map
                             </Text>
 
                     </TouchableOpacity>
-
-                </View>
 
 
 
@@ -115,31 +125,38 @@ function Consumer({ navigation }) {
             <View style={styles.lowerView}>
                 <View style={{ flex: 1, alignItems: 'flex-end', marginHorizontal: 30, marginTop: 20 }}>
                     <TouchableOpacity activeOpacity={0.8}>
-                        <Text style={{ fontSize: 15, color: '#00af91' }}>
+                        <Text style={{ fontSize: 15, color: color }}>
                             <Icon name='send-o' size={15} /> Send OTP
                             </Text>
                     </TouchableOpacity>
                 </View>
-                <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', flexDirection: 'row', marginBottom: 20, marginTop: 20 }}>
-                    <TextInput ref={pin1} placeholder='_' placeholderTextColor='#ccc' onChangeText={(pin1) => { if (pin1 != "") { pin2.current.focus() } }} style={{ borderWidth: 2, borderColor: '#00af91', width: 40, textAlign: 'center', fontSize: 20, color: '#00af91', marginHorizontal: 5, borderRadius: 10 }} maxLength={1} keyboardType='numeric' />
-                    <TextInput ref={pin2} placeholder='_' placeholderTextColor='#ccc' onChangeText={(pin2) => { if (pin2 != "") { pin3.current.focus() } }} style={{ borderWidth: 2, borderColor: '#00af91', width: 40, textAlign: 'center', fontSize: 20, color: '#00af91', marginHorizontal: 5, borderRadius: 10 }} maxLength={1} keyboardType='numeric' />
-                    <TextInput ref={pin3} placeholder='_' placeholderTextColor='#ccc' onChangeText={(pin3) => { if (pin3 != "") { pin4.current.focus() } }} style={{ borderWidth: 2, borderColor: '#00af91', width: 40, textAlign: 'center', fontSize: 20, color: '#00af91', marginHorizontal: 5, borderRadius: 10 }} maxLength={1} keyboardType='numeric' />
-                    <TextInput ref={pin4} placeholder='_' placeholderTextColor='#ccc' style={{ borderWidth: 2, borderColor: '#00af91', width: 40, textAlign: 'center', fontSize: 20, color: '#00af91', marginHorizontal: 5, borderRadius: 10 }} maxLength={1} keyboardType='numeric' />
-
+                <View style={{ flex: 1, justifyContent: 'center', flexDirection: 'row', marginBottom: 20, marginTop: 20 }}>
+                    <View style={{ borderWidth: 2, borderColor: color, width: 40, marginHorizontal: 5, borderRadius: 10, alignItems: 'center', }}>
+                        <TextInput allowFontScaling={false} ref={pin1} placeholder='_' placeholderTextColor='#ccc' onChangeText={(pin1) => { if (pin1 != "") { pin2.current.focus() } }} style={{ marginHorizontal: 6, fontSize: 20, color: color }} maxLength={1} keyboardType='numeric' />
+                    </View>
+                    <View style={{ borderWidth: 2, borderColor: color, width: 40, marginHorizontal: 5, borderRadius: 10, alignItems: 'center', }}>
+                        <TextInput allowFontScaling={false} ref={pin2} placeholder='_' placeholderTextColor='#ccc' onChangeText={(pin2) => { if (pin2 != "") { pin3.current.focus() } }} style={{ marginHorizontal: 6, fontSize: 20, color: color }} maxLength={1} keyboardType='numeric' />
+                    </View>
+                    <View style={{ borderWidth: 2, borderColor: color, width: 40, marginHorizontal: 5, borderRadius: 10, alignItems: 'center', }}>
+                        <TextInput allowFontScaling={false}ref={pin3} placeholder='_' placeholderTextColor='#ccc' onChangeText={(pin3) => { if (pin3 != "") { pin4.current.focus() } }} style={{ marginHorizontal: 6, fontSize: 20, color: color }} maxLength={1} keyboardType='numeric' />
+                    </View>
+                    <View style={{ borderWidth: 2, borderColor: color, width: 40, marginHorizontal: 5, borderRadius: 10, alignItems: 'center', }}>
+                        <TextInput allowFontScaling={false} ref={pin4} placeholder='_' placeholderTextColor='#ccc' style={{ marginHorizontal: 6, fontSize: 20, color: color }} maxLength={1} keyboardType='numeric' />
+                    </View>
                 </View>
                 <TouchableOpacity style={styles.signinbtn} activeOpacity={0.8} onPress={() => createAcc()}>
-                    <Text style={{ fontSize: 20, fontWeight: '300', color: '#00af91' }}>
+                    <Text style={{ fontSize: 20, fontWeight: '300', color: color }}>
                         Create Account
                 </Text>
                 </TouchableOpacity>
                 <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
                     <TouchableOpacity style={styles.privacy} activeOpacity={0.8}>
-                        <Text style={{ fontSize: 15, fontWeight: '200', color: '#00af91', textDecorationLine: 'underline' }}>
+                        <Text style={{ fontSize: 15, fontWeight: '200', color: color, textDecorationLine: 'underline' }}>
                             Terms and condition
                 </Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.privacy} activeOpacity={0.8}>
-                        <Text style={{ fontSize: 15, fontWeight: '200', color: '#00af91', textDecorationLine: 'underline' }}>
+                        <Text style={{ fontSize: 15, fontWeight: '200', color: color, textDecorationLine: 'underline' }}>
                             Privacy policy
                 </Text>
                     </TouchableOpacity>
@@ -161,7 +178,7 @@ const styles = StyleSheet.create({
     upperView: {
         flex: 2,
         height: 2 * height / 3,
-        backgroundColor: '#00af91',
+        backgroundColor: color,
         borderBottomLeftRadius: 50,
         borderBottomRightRadius: 50,
         flexDirection: 'column',
@@ -182,7 +199,7 @@ const styles = StyleSheet.create({
         marginHorizontal: 60,
         marginBottom: 30,
         alignItems: 'center',
-        backgroundColor: '#00af91',
+        backgroundColor: color,
         borderColor: '#fff',
         borderWidth: 2,
         padding: 5,
@@ -202,7 +219,7 @@ const styles = StyleSheet.create({
         marginBottom: 30,
         alignItems: 'center',
         backgroundColor: '#fff',
-        borderColor: '#00af91',
+        borderColor: color,
         borderWidth: 2,
         padding: 5,
         borderBottomRightRadius: 20,
@@ -213,9 +230,9 @@ const styles = StyleSheet.create({
     },
     input: {
         marginHorizontal: 60,
-        marginBottom: 10,
-        textAlign: 'center',
-        backgroundColor: '#00af91',
+        marginBottom: 15,
+        alignItems: 'center',
+        backgroundColor: color,
         borderColor: '#fff',
         borderWidth: 2,
         borderBottomRightRadius: 20,

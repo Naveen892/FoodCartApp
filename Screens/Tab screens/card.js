@@ -1,13 +1,15 @@
 import { WrapText } from '@material-ui/icons';
 import React from 'react';
 import { Text, View, TouchableOpacity, Image, StyleSheet, Dimensions } from 'react-native';
+import {color} from "/home/naveen/FoodCart/imp.js";
+
 const width = Dimensions.get('window').width;
 
 
 export default function Card( props, {navigation }) {
 
     return (
-        <TouchableOpacity onPress={() => navigation.navigate('products')} style={styles.card} activeOpacity={0.7}>
+        <TouchableOpacity onPress={() => navigation.navigate('products' , {type: props.type, image: props.image})} style={styles.card} activeOpacity={0.7}>
 
             <Image
                 style={styles.image}
@@ -15,9 +17,10 @@ export default function Card( props, {navigation }) {
                     uri: props.image,
                 }}
             />
-
+            
             <Text style={styles.text}>{props.type}</Text>
 
+            
 
         </TouchableOpacity>
 
@@ -40,12 +43,12 @@ const styles = StyleSheet.create({
     },
     image: {
         width: 2 * width / 5,
-        height: width / 4 + 1,
-        margin: 20
+        height:2 * width / 5-20,
+        margin: 0,
     },
     text: {
         fontSize: width/21,
-        color: 'black'
+        color: 'black',
     }
 
 })

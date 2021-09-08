@@ -1,7 +1,8 @@
-import React, { useState } from 'react'
-import { View, Text, ScrollView, Image, StyleSheet, Dimensions, TouchableOpacity, Modal, TextInput, ToastAndroid,Alert } from 'react-native'
+import React, { useState,useEffect } from 'react'
+import { View, Text, ScrollView, Image, StyleSheet, Dimensions, TouchableOpacity, Modal, TextInput, ToastAndroid,Alert,BackHandler } from 'react-native'
 import Icon from 'react-native-vector-icons/FontAwesome';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {color} from "/home/naveen/FoodCart/imp.js";
 const height = Dimensions.get('screen').height;
 
 
@@ -13,6 +14,28 @@ export default function ConsumerProfile({ navigation }) {
     var nameString = name;
     var contactString = contact;
     var locationString = location;
+    
+    function handleBackButtonClick() {
+        console.log('back ');
+        
+            navigation.navigate('All');
+            
+            return true;
+       
+      }
+      const backHandler = BackHandler.addEventListener(
+        "hardwareBackPress",
+        handleBackButtonClick
+      );
+      useEffect(() => {
+        
+          console.log("use Effect Profile")
+          
+            
+          return () => backHandler.remove();
+        
+      }, [navigation]);
+
     const signOut = async () => {
             Alert.alert("Warning", "Are You Sure !", [{
                 text: "Cancel",
@@ -33,8 +56,8 @@ export default function ConsumerProfile({ navigation }) {
         <View style={{ flex: 1, backgroundColor: '#fff' }}>
 
             {/* User Information */}
-            <View style={{ backgroundColor: '#00af91', elevation: 10, height: 3 * height / 7, borderBottomRightRadius: 30, borderBottomLeftRadius: 5 }}>
-                <View style={{ flexDirection: 'row', backgroundColor: '#00af91' }}>
+            <View style={{ backgroundColor: color, elevation: 10, height: 3 * height / 7, borderBottomRightRadius: 30, borderBottomLeftRadius: 5 }}>
+                <View style={{ flexDirection: 'row', backgroundColor: color }}>
                     <Icon name='arrow-left' style={{ marginTop: 40, marginLeft: 40, marginBottom: 20 }} size={25} color='#fff' onPress={() => navigation.navigate('FoodCart')} />
                     <View style={{ alignItems: 'flex-end', flex: 1 }}>
                         <Text style={styles.name}>Consumer</Text>
@@ -42,16 +65,16 @@ export default function ConsumerProfile({ navigation }) {
                     </View>
                 </View>
                 <View style={styles.usercard}>
-                    <Icon name='user-circle-o' size={100} color='#00af91' style={{ marginLeft: 20 }} />
+                    <Icon name='user-circle-o' size={100} color={color} style={{ marginLeft: 20 }} />
                     <View style={{ flex: 1, marginLeft: 10, justifyContent: 'center', alignContent: 'center' }}>
                         <Text
-                            style={{ fontSize: 30, color: '#00af91' }}
+                            style={{ fontSize: 30, color: color }}
                         >{"" + name.toString()}
                         </Text>
 
 
                         <Text
-                            style={{ color: '#00af91', marginVertical: 5, fontSize: 15 }}
+                            style={{ color: color, marginVertical: 5, fontSize: 15 }}
                         >
                             {"" + contact.toString()}
                         </Text>
@@ -77,28 +100,32 @@ export default function ConsumerProfile({ navigation }) {
                 <Modal
                     transparent={true}
                     visible={editprofile}
+                    animationType="fade"
+                    statusBarTranslucent={true}
                 >
                     <View style={{ flex: 1, backgroundColor: '#000000aa', alignContent: 'center', justifyContent: 'center' }}>
 
                         <View style={{ height: height / 3 }}>
                             <View style={styles.usercardmodal}>
                                 <View style={{ flex: 4, alignItems: 'center', flexDirection: 'row', paddingBottom: 0 }}>
-                                    <Icon name='user-circle-o' size={100} color='#00af91' style={{}} />
+                                    <Icon name='user-circle-o' size={100} color={color} style={{}} />
                                     <View style={{ flex: 1, marginLeft: 10, justifyContent: 'center', alignContent: 'center' }}>
                                         <TextInput
-                                            style={{ fontSize: 25, color: '#00af91', padding: 0, borderColor: '#00af91', borderWidth: 1, paddingLeft: 10, borderRadius: 5 }}
+                                        allowFontScaling={false}
+                                            style={{ fontSize: 25, color: color, padding: 0, borderColor: color, borderWidth: 1, paddingLeft: 10, borderRadius: 5 }}
                                             defaultValue={name}
                                             maxLength={20}
-                                            placeholderTextColor='#00af91'
+                                            placeholderTextColor={color}
                                             onChangeText={(text) => { if (text != "") nameString = "" + text }}
                                         />
 
 
                                         <TextInput
-                                            style={{ color: '#00af91', marginVertical: 5, fontSize: 15, padding: 0, borderColor: '#00af91', borderWidth: 1, marginRight: 60, paddingLeft: 10, borderRadius: 5 }}
+                                        allowFontScaling={false}
+                                            style={{ color: color, marginVertical: 5, fontSize: 15, padding: 0, borderColor: color, borderWidth: 1, marginRight: 60, paddingLeft: 10, borderRadius: 5 }}
                                             defaultValue={contact}
                                             keyboardType='phone-pad'
-                                            placeholderTextColor='#00af91'
+                                            placeholderTextColor={color}
                                             maxLength={10}
                                             onChangeText={(text) => { if (text != "") contactString = "" + text }}
                                         />
@@ -106,6 +133,7 @@ export default function ConsumerProfile({ navigation }) {
 
 
                                         <TextInput
+                                        allowFontScaling={false}
                                             style={{
                                                 color: '#d89216', borderWidth: 1, borderColor: '#d89216', fontSize: 15, padding: 2, marginRight: 20, borderRadius: 5, paddingStart: 9, marginBottom: 0
                                             }}
@@ -129,7 +157,7 @@ export default function ConsumerProfile({ navigation }) {
                                 <View style={{ flex: 1, alignItems: 'flex-end', justifyContent: 'flex-end', marginRight: 10, marginBottom: 0, flexDirection: 'row' }}>
                                     <TouchableOpacity activeOpacity={0.8} style={styles.btncencel} onPress={() => seteditprofile(false)}>
 
-                                        <Text style={styles.text, { color: '#00af91' }}>Cencel</Text>
+                                        <Text style={styles.text, { color: color }}>Cencel</Text>
 
                                     </TouchableOpacity>
                                     <TouchableOpacity
@@ -171,59 +199,59 @@ export default function ConsumerProfile({ navigation }) {
                 </View>
                 <View style={{ borderBottomWidth: 1, borderBottomColor: "#aaa", marginHorizontal: 10 }}></View>
                 <TouchableOpacity style={{ margin: 10, flexDirection: 'row', alignItems: 'center' }} activeOpacity={0.8} onPress={() => navigation.navigate('OrderHistory')}>
-                    <Icon name='history' color='#00af91' size={23} style={{ marginLeft: 20, marginRight: 10 }} />
-                    <Text style={{ color: '#00af91', fontSize: 23 }}>
+                    <Icon name='history' color={color} size={23} style={{ marginLeft: 20, marginRight: 10 }} />
+                    <Text style={{ color: color, fontSize: 23 }}>
                         Order History
                     </Text>
                 </TouchableOpacity>
 
                 <View style={{ borderBottomWidth: 1, borderBottomColor: "#ddd", marginHorizontal: 10 }}></View>
                 <TouchableOpacity style={{ margin: 10, flexDirection: 'row', alignItems: 'center' }} activeOpacity={0.8} onPress={() => navigation.navigate('Notification')}>
-                    <Icon name='bell-o' color='#00af91' size={23} style={{ marginLeft: 20, marginRight: 10 }} />
-                    <Text style={{ color: '#00af91', fontSize: 23 }}>
-                        Notifications
+                    <Icon name='bell-o' color={color} size={23} style={{ marginLeft: 20, marginRight: 10 }} />
+                    <Text style={{ color: color, fontSize: 23 }}>
+                         Notifications
                     </Text>
                 </TouchableOpacity>
                 <View style={{ borderBottomWidth: 1, borderBottomColor: "#ddd", marginHorizontal: 10 }}></View>
-                <TouchableOpacity style={{ margin: 10, flexDirection: 'row', alignItems: 'center' }} activeOpacity={0.8}>
-                    <Icon name='gift' color='#00af91' size={23} style={{ marginLeft: 20, marginRight: 10 }} />
-                    <Text style={{ color: '#00af91', fontSize: 23 }}>
+                <TouchableOpacity style={{ margin: 10, flexDirection: 'row', alignItems: 'center' }} activeOpacity={0.8} onPress={() => navigation.navigate('Gifts')}>
+                    <Icon name='gift' color={color} size={23} style={{ marginLeft: 20, marginRight: 10 }} />
+                    <Text style={{ color: color, fontSize: 23 }}>
                         My Gifts
                     </Text>
                 </TouchableOpacity>
                 <View style={{ borderBottomWidth: 1, borderBottomColor: "#ddd", marginHorizontal: 10 }}></View>
                 <TouchableOpacity style={{ margin: 10, flexDirection: 'row', alignItems: 'center' }} activeOpacity={0.8}>
-                    <Icon name='star-half-o' color='#00af91' size={23} style={{ marginLeft: 20, marginRight: 10 }} />
-                    <Text style={{ color: '#00af91', fontSize: 23 }}>
+                    <Icon name='star-half-o' color={color} size={23} style={{ marginLeft: 20, marginRight: 10 }} />
+                    <Text style={{ color: color, fontSize: 23 }}>
                         Ratings And Reviews
                     </Text>
                 </TouchableOpacity>
                 <View style={{ borderBottomWidth: 1, borderBottomColor: "#ddd", marginHorizontal: 10 }}></View>
                 <TouchableOpacity style={{ margin: 10, flexDirection: 'row', alignItems: 'center' }} activeOpacity={0.8}>
-                    <Icon name='question-circle' color='#00af91' size={23} style={{ marginLeft: 20, marginRight: 10 }} />
-                    <Text style={{ color: '#00af91', fontSize: 23 }}>
+                    <Icon name='question-circle' color={color} size={23} style={{ marginLeft: 20, marginRight: 10 }} />
+                    <Text style={{ color: color, fontSize: 23 }}>
                         Ask A Question
                     </Text>
                 </TouchableOpacity>
                 <View style={{ borderBottomWidth: 1, borderBottomColor: "#ddd", marginHorizontal: 10 }}></View>
                 <TouchableOpacity style={{ margin: 10, flexDirection: 'row', alignItems: 'center' }} activeOpacity={0.8}>
-                    <Icon name='comments' color='#00af91' size={23} style={{ marginLeft: 20, marginRight: 10 }} />
-                    <Text style={{ color: '#00af91', fontSize: 23 }}>
+                    <Icon name='comments' color={color} size={23} style={{ marginLeft: 20, marginRight: 10 }} />
+                    <Text style={{ color: color, fontSize: 23 }}>
                         Feedback
                     </Text>
                 </TouchableOpacity>
                 <View style={{ borderBottomWidth: 1, borderBottomColor: "#ddd", marginHorizontal: 10 }}></View>
                 <TouchableOpacity style={{ margin: 10, flexDirection: 'row', alignItems: 'center' }} activeOpacity={0.8}>
-                    <Icon name='info-circle' color='#00af91' size={23} style={{ marginLeft: 20, marginRight: 10 }} />
-                    <Text style={{ color: '#00af91', fontSize: 23 }}>
+                    <Icon name='info-circle' color={color} size={23} style={{ marginLeft: 20, marginRight: 10 }} />
+                    <Text style={{ color: color, fontSize: 23 }}>
                         Information
                     </Text>
                 </TouchableOpacity>
                 <View style={{ borderBottomWidth: 1, borderBottomColor: "#ddd", marginHorizontal: 10 }}></View>
 
                 <TouchableOpacity style={{ margin: 10, flexDirection: 'row', alignItems: 'center' }} activeOpacity={0.8} onPress={() => signOut()}>
-                    <Icon name='sign-out' color='#00af91' size={23} style={{ marginLeft: 20, marginRight: 10 }} />
-                    <Text style={{ color: '#00af91', fontSize: 23 }}>
+                    <Icon name='sign-out' color={color} size={23} style={{ marginLeft: 20, marginRight: 10 }} />
+                    <Text style={{ color: color, fontSize: 23 }}>
                         Log Out
                     </Text>
                 </TouchableOpacity>
@@ -282,7 +310,7 @@ const styles = StyleSheet.create({
         color: '#fff',
     },
     button: {
-        backgroundColor: "#00af91",
+        backgroundColor: color,
         alignItems: 'center',
         width: 100,
         borderColor: '#fff',
@@ -300,7 +328,7 @@ const styles = StyleSheet.create({
         marginEnd: 10,
         alignItems: 'center',
         width: 100,
-        borderColor: '#00af91',
+        borderColor: color,
         borderWidth: 2,
         margin: 1,
         padding: 2,

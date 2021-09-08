@@ -2,6 +2,7 @@ import React ,{useState,useEffect} from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, TextInput, ScrollView, Dimensions,Vibration,ToastAndroid } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {color} from "/home/naveen/FoodCart/imp.js";
 const height = Dimensions.get('window').height;
 
 function LogInConsumer({ navigation }) {
@@ -10,8 +11,7 @@ function LogInConsumer({ navigation }) {
 
     useEffect(() => {
         const unsubscribe = navigation.addListener('focus', () => {
-          console.log('Refreshed!');
-          window.location.reload(false);
+          
         });
         return unsubscribe;
       }, [navigation]);
@@ -23,6 +23,7 @@ function LogInConsumer({ navigation }) {
         if(username === user && password === pass){
             navigation.navigate('ConsumerProfile')
             await AsyncStorage.setItem('isLoggedIn', '1')
+            await AsyncStorage.setItem('cartItem', {})
         }
         else{
             ToastAndroid.show("Incorrect User Name or Password",
@@ -61,6 +62,7 @@ function LogInConsumer({ navigation }) {
                     <View style={styles.input}>
 
                         <TextInput
+                        allowFontScaling={false}
                             placeholder='Please Enter Your User Name'
                             placeholderTextColor='#ccc'
                             onChangeText={(text)=>setUserName(text)}
@@ -73,6 +75,7 @@ function LogInConsumer({ navigation }) {
                     <View style={styles.input}>
 
                         <TextInput
+                        allowFontScaling={false}
                             placeholder='Please Enter Your Password'
                             placeholderTextColor='#ccc'
                             onChangeText={(text)=>setPassword(text)}
@@ -87,7 +90,7 @@ function LogInConsumer({ navigation }) {
                 <View style={styles.lowerView}>
                 <View style={{alignItems:'center'}}>
                         <TouchableOpacity activeOpacity={0.8}>
-                            <Text style={{fontSize:15,color: '#00af91',textDecorationLine: 'underline' ,marginBottom:17}}>
+                            <Text style={{fontSize:15,color: color,textDecorationLine: 'underline' ,marginBottom:17}}>
                              Forgot Password 
                             </Text>
                         </TouchableOpacity>
@@ -98,18 +101,18 @@ function LogInConsumer({ navigation }) {
                 </Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.signinbtn} activeOpacity={0.8} onPress={()=>navigation.navigate('Consumer')}>
-                        <Text style={{ fontSize: 20, fontWeight: '300', color: '#00af91' }}>
+                        <Text style={{ fontSize: 20, fontWeight: '300', color: color }}>
                             Create New Account
                 </Text>
                     </TouchableOpacity>
                     <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
                         <TouchableOpacity style={styles.privacy} activeOpacity={0.8}>
-                            <Text style={{ fontSize: 15, fontWeight: '200', color: '#00af91', textDecorationLine: 'underline' }}>
+                            <Text style={{ fontSize: 15, fontWeight: '200', color: color, textDecorationLine: 'underline' }}>
                                 Terms and condition
                 </Text>
                         </TouchableOpacity>
                         <TouchableOpacity style={styles.privacy} activeOpacity={0.8}>
-                            <Text style={{ fontSize: 15, fontWeight: '200', color: '#00af91', textDecorationLine: 'underline' }}>
+                            <Text style={{ fontSize: 15, fontWeight: '200', color: color, textDecorationLine: 'underline' }}>
                                 Privacy policy
                 </Text>
                         </TouchableOpacity>
@@ -129,7 +132,7 @@ export default LogInConsumer;
 const styles = StyleSheet.create({
     upperView: {
         flex: 2,
-        backgroundColor: '#00af91',
+        backgroundColor: color,
         borderBottomLeftRadius: 50,
         borderBottomRightRadius: 50,
         flexDirection: 'column',
@@ -149,7 +152,7 @@ const styles = StyleSheet.create({
         marginHorizontal: 60,
         marginBottom: 30,
         alignItems: 'center',
-        backgroundColor: '#00af91',
+        backgroundColor: color,
         borderColor:'#fff',
         borderWidth:2,
         padding: 5,
@@ -174,7 +177,7 @@ const styles = StyleSheet.create({
         marginBottom: 30,
         alignItems: 'center',
         backgroundColor: '#fff',
-        borderColor: '#00af91',
+        borderColor: color,
         borderWidth: 2,
         padding: 5,
         borderBottomRightRadius: 20,
@@ -187,7 +190,7 @@ const styles = StyleSheet.create({
         marginHorizontal: 60,
         marginBottom: 30,
         alignItems: 'center',
-        backgroundColor: '#00af91',
+        backgroundColor: color,
         borderColor: '#fff',
         borderWidth: 2,
         borderBottomRightRadius: 20,

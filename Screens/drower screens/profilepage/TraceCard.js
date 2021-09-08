@@ -2,9 +2,34 @@
 import React from 'react';
 import { Text, View, Button, TouchableOpacity, Image, StyleSheet, Dimensions, } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome'
+import {color} from "/home/naveen/FoodCart/imp.js";
 import { ProgressBar } from 'react-native-paper';
+import StepIndicator from 'react-native-step-indicator';
 const width = Dimensions.get('window').width;
-
+const labels = ["Cart","Packed","TransPort","Recived"];
+const customStyles = {
+    stepIndicatorSize: 25,
+    currentStepIndicatorSize:30,
+    separatorStrokeWidth: 2,
+    currentStepStrokeWidth: 3,
+    stepStrokeCurrentColor: color,
+    stepStrokeWidth: 3,
+    stepStrokeFinishedColor: color,
+    stepStrokeUnFinishedColor: '#aaaaaa',
+    separatorFinishedColor: color,
+    separatorUnFinishedColor: '#aaaaaa',
+    stepIndicatorFinishedColor: color,
+    stepIndicatorUnFinishedColor: '#ffffff',
+    stepIndicatorCurrentColor: '#ffffff',
+    stepIndicatorLabelFontSize: 13,
+    currentStepIndicatorLabelFontSize: 13,
+    stepIndicatorLabelCurrentColor: color,
+    stepIndicatorLabelFinishedColor: '#ffffff',
+    stepIndicatorLabelUnFinishedColor: '#aaaaaa',
+    labelColor: '#999999',
+    labelSize: 13,
+    currentStepLabelColor: color
+  }
 export default function TraceCard(props, { navigation }) {
 
 
@@ -34,7 +59,7 @@ export default function TraceCard(props, { navigation }) {
 
                         <Text style={{ fontSize: 15 }}>
                             Quantiiy : {props.quantity} kg.
-                 </Text>
+                        </Text>
                     </View>
                 </View>
 
@@ -44,29 +69,23 @@ export default function TraceCard(props, { navigation }) {
                     </Text>
                     <Text style={{ marginRight: width / 10, fontSize: 10, fontStyle: 'italic', marginTop: 10, color: '#aaa' }} >
                         Expected Delivery At
-                 </Text>
+                    </Text>
                     <Text style={{ marginRight: 10, borderColor: '#d89216', borderWidth: 1, paddingHorizontal: 7, borderRadius: 5, color: '#d89216' }}>
                         26 / 3 / 21
-                 </Text>
+                    </Text>
                 </View>
 
 
             </TouchableOpacity>
-            <View style={{ height: 70, backgroundColor: '#fff', marginBottom: 6, marginHorizontal: 10, elevation: 2., borderBottomLeftRadius: 7, borderBottomRightRadius: 7, justifyContent: 'center',borderTopColor:'#ccc',borderTopWidth:1 }}>
-            <ProgressBar progress={0.2} color={'#00af91'} style={{ marginHorizontal: 35 }} />
-                
-                <View style={{flexDirection:'row',alignContent:'center',justifyContent:'center',alignItems:'center'}}>
-                    <Text style={{borderColor:'#00af91',borderWidth:2,borderRadius:15,width:30,height:30,fontSize:20,color:'#00af91',textAlign:'center',}}>1</Text>
-                    <Text style={{borderColor:'#00af91',borderWidth:2,borderRadius:15,width:30,height:30,fontSize:20,color:'#00af91',textAlign:'center',marginHorizontal:width/3-10}}>2</Text>
-                    <Text style={{borderColor:'#00af91',borderWidth:2,borderRadius:15,width:30,height:30,fontSize:20,color:'#00af91',textAlign:'center'}}>3</Text>
-                </View>
-                <View style={{flexDirection:'row',alignContent:'center',justifyContent:'center',alignItems:'center'}}>
-                    <Text style={{fontSize:15,color:'#00af91'}}>Packed</Text>
-                    <Text style={{fontSize:15,color:'#00af91',marginHorizontal:width/4-20}}>Transport</Text>
-                    <Text style={{fontSize:15,color:'#00af91'}}>Recived</Text>
-                </View>
+            <View style={{ height: 70, backgroundColor: '#fff', marginBottom: 6, marginHorizontal: 10, elevation: 2., borderBottomLeftRadius: 7, borderBottomRightRadius: 7, justifyContent: 'center', borderTopColor: '#ccc', borderTopWidth: 1 }}>
+            <StepIndicator
+                        customStyles={customStyles}
+                        labels={labels}
+                        currentPosition={2}
+                        stepCount={4}
+                    />
 
-                
+
             </View>
 
         </View>

@@ -1,11 +1,19 @@
 import React from 'react';
 import { View, Text, StatusBar, FlatList, ImageBackground, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import {color} from "/home/naveen/FoodCart/imp.js";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import orderHistoryCard from '/home/naveen/FoodCart/Screens/drower screens/profilepage/orderHistoryCard';
 
 const columns = 2;
 function OrderHistory({ navigation }) {
-
+    const goToProfile = async() => {
+        const isLoggedIn = await AsyncStorage.getItem('isLoggedIn');
+         navigation.navigate(
+             isLoggedIn === '1' ? 'ConsumerProfile' : (isLoggedIn==='2' ? 'RetailerProfile':'My Profile')
+            );
+    }
+ 
     const data = [
         { type: 'Potato', price: 20, grade: 'A', id: 1, quantity: 6 },
         { type: 'Onion', price: 24, grade: 'B', id: 2, quantity: 2 },
@@ -17,15 +25,15 @@ function OrderHistory({ navigation }) {
     ];
     return (
         <View style={{ flex: 1 }}>
-            <View style={{ flex: 0.09, backgroundColor: '#00af91', flexDirection: 'row', alignItems: 'center', elevation: 10 }}>
-                <Icon name='arrow-left' color='#fff' size={25} style={{ marginLeft: 30 }} onPress={() => { navigation.navigate('ConsumerProfile') }} />
+            <View style={{ flex: 0.09, backgroundColor: color, flexDirection: 'row', alignItems: 'center', elevation: 10 }}>
+                <Icon name='arrow-left' color='#fff' size={25} style={{ marginLeft: 30 }} onPress={() => goToProfile()} />
 
                 <Text style={{ fontSize: 22, marginLeft: 20, color: '#fff',  }}>
                     Order History
                 </Text>
             </View>
             <View style={{flex:1}}>
-                <StatusBar backgroundColor="#00af91" />
+                <StatusBar backgroundColor={color} />
                 <FlatList
                     key={(item) => '' + item.type}
                     data={data}
